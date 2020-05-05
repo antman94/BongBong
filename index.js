@@ -6,6 +6,8 @@ const routes = require('./routes');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+//Middleware för att haka på mongo models till varje request
 app.use((req, res, next) => {
   req.models = db.models
   next()

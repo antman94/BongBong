@@ -32,7 +32,7 @@ createStudent = (req, res, next) => {
 
 replaceStudent = (req, res, next) => {
 
-  const replacement = {
+  const updatedStudent = {
     email: req.body.email,
     name: req.body.name,
     address: {
@@ -41,7 +41,7 @@ replaceStudent = (req, res, next) => {
       city: req.body.address.city,
     }
   }
-  req.models.Student.findOneAndReplace({_id:req.params.id}, replacement)
+  req.models.Student.findOneAndReplace({_id:req.params.id}, updatedStudent)
     .then((result) => {
       return res.status(201).send(result)
     }).catch((error) => {
@@ -50,7 +50,12 @@ replaceStudent = (req, res, next) => {
 }
 
 deleteStudent = (req, res, next) => {
-  req.models.Student.findOneAn
+  req.models.Student.findOneAndDelete({_id:req.params.id})
+    .then((result) => {
+      return res.sendStatus(200)
+    }).catch((error) => {
+      next(error)
+    })
 }
 
 

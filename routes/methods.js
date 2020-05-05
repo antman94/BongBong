@@ -49,6 +49,10 @@ replaceStudent = (req, res, next) => {
     })
 }
 
+deleteStudent = (req, res, next) => {
+  req.models.Student.findOneAn
+}
+
 
 
 module.exports = {

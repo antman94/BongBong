@@ -1,6 +1,14 @@
+getStudents = (req, res, next) => {
+  // localhost:3000/user => req.query {}
+  // localhost:3000/user?usermame=pelle => req.query {"username": "pelle"}
+  req.models.Student.find(req.query).then((user) => {
+      return res.send(user);
+    }).catch((error) => {
+      next(error)
+    })
+}
 
-
-listStudents = (req, res, next) => {
+/* listStudents = (req, res, next) => {
   req.models.Student.find().then((posts) => {
     return res.send(posts);
   }).catch((error) => {
@@ -12,7 +20,7 @@ getSingleStudent = (req, res, next) => {
   req.models.Student.find({name: req.params.name}).then((result) => {
     return res.send(result);
   })
-}
+} */
 
 createStudent = (req, res, next) => {
   req.models.Student.create({
@@ -61,8 +69,7 @@ deleteStudent = (req, res, next) => {
 
 
 module.exports = {
-  listStudents,
-  getSingleStudent,
+  getStudents,
   createStudent,
   replaceStudent
 }

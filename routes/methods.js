@@ -7,20 +7,22 @@ getStudents = (req, res, next) => {
       next(error)
     })
 }
-
-/* listStudents = (req, res, next) => {
+/* 
+listStudents = (req, res, next) => {
   req.models.Student.find().then((posts) => {
     return res.send(posts);
   }).catch((error) => {
     next(error)
   })
-}
-
-getSingleStudent = (req, res, next) => {
-  req.models.Student.find({name: req.params.name}).then((result) => {
-    return res.send(result);
-  })
 } */
+
+getStudentById = (req, res, next) => {
+  req.models.Student.find({_id: req.params.id}).then((result) => {
+    return res.send(result);
+  }).catch((error) => {
+    next(error)
+  })
+} 
 
 createStudent = (req, res, next) => {
   req.models.Student.create({
@@ -71,5 +73,6 @@ deleteStudent = (req, res, next) => {
 module.exports = {
   getStudents,
   createStudent,
+  getStudentById,
   replaceStudent
 }

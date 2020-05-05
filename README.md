@@ -22,7 +22,7 @@ curl -i -s -X PUT "localhost:3000/students/5eb07ef86724f94fe0c4d69b" -H "Content
 
 ### List students in database
 ```sh
-curl -i -s "localhost:3000/students" | jq
+curl -s "localhost:3000/students" | jq
 ```
 
 ### Get single student by ID

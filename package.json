@@ -1,0 +1,28 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "inlamning1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthel/BongBong.git"
+  },
+  "author": "Ante",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anthel/BongBong/issues"
+  },
+  "homepage": "https://github.com/anthel/BongBong#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.11",
+    "uuid": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}

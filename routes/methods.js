@@ -1,8 +1,8 @@
 getStudents = (req, res, next) => {
   // localhost:3000/user => req.query {}
   // localhost:3000/user?usermame=pelle => req.query {"username": "pelle"}
-  req.models.Student.find(req.query).then((user) => {
-      return res.send(user);
+  req.models.Student.find(req.query).then((data) => {
+      return res.send(data);
     }).catch((error) => {
       next(error)
     })

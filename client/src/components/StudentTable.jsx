@@ -36,8 +36,18 @@ function createStudent(url, data) {
     body: JSON.stringify(data)
   });
 }
+function deleteStudent(_id) {
+  
+  return fetch('http://localhost:4000/students/'+ _id, {
+    method: 'DELETE',
 
+  });
+}
 
+/**
+ * @desc Renders a table containing data fetched from a backend
+ * @author Ante 
+ */
 function StudentTable() {
 
   const [rows, setRows] = useState([]);
@@ -58,8 +68,8 @@ function StudentTable() {
     fetch('http://localhost:4000/students')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         setRows(data);
+        
       });
   }, [])
   
@@ -79,10 +89,17 @@ function StudentTable() {
           </TableHead>
           <TableBody>
             
-            {rows.map((row) => (
-              <TableRow key={row._id}>
+            {rows.map((row, index) => (
+              <TableRow key={row._id} id={index}>
                 <TableCell>
-                  <button style={{border:'none'}}>
+                  <button style={{border:'none'}} onClick={(e) => {
+                    document.getElementsByTagName('TBODY')[0].removeChild(document.getElementById(index));
+                    // Removes row from table based on map index
+                    console.log(rows[index]._id)
+                    deleteStudent(rows[index]._id)
+                      .then((response) => console.log(response))
+
+                  }}>
                     <span className="material-icons MuiIcon-root">clear</span>
                   </button>
                 </TableCell>
@@ -158,7 +175,6 @@ function StudentTable() {
             })}/>
         </div>
         <button onClick={(e) => {
-          console.log(inputValue)
           createStudent('http://localhost:4000/students', inputValue);
           e.preventDefault();
         }}>Create</button>

@@ -62,6 +62,7 @@ replaceStudent = (req, res, next) => {
 deleteStudent = (req, res, next) => {
   req.models.Student.findOneAndDelete({_id:req.params.id})
     .then((result) => {
+      console.log(`DELETE ${req.params.id} OK.`)
       return res.sendStatus(200)
     }).catch((error) => {
       next(error)
@@ -74,5 +75,6 @@ module.exports = {
   getStudents,
   createStudent,
   getStudentById,
-  replaceStudent
+  replaceStudent,
+  deleteStudent
 }

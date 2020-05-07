@@ -90,7 +90,7 @@ function StudentTable() {
           <TableBody>
             
             {rows.map((row, index) => (
-              <TableRow key={row._id} id={index}>
+              <TableRow key={index} id={index}>
                 <TableCell>
                   <button style={{border:'none'}} onClick={(e) => {
                     document.getElementsByTagName('TBODY')[0].removeChild(document.getElementById(index));
@@ -175,7 +175,11 @@ function StudentTable() {
             })}/>
         </div>
         <button onClick={(e) => {
-          createStudent('http://localhost:4000/students', inputValue);
+          createStudent('http://localhost:4000/students', inputValue)
+            .then(response => {
+              if(response.status == 201) 
+                setRows([...rows, inputValue])
+            })
           e.preventDefault();
         }}>Create</button>
       </form>

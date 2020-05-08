@@ -1,11 +1,22 @@
-# BongBong
-Inlämning1 Backend
+# BongBong Server
+
 ---
-### Start server 
+### To start server
 ```sh
 npm install
 npm start
 ```
+
+Note: Requires MongoDB to be installed
+
+```sh
+npm install -g mongodb
+```
+
+or
+
+https://docs.mongodb.com/manual/administration/install-community/
+
 ---
 ## Supported paths and methods
 

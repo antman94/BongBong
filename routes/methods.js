@@ -36,15 +36,14 @@ createStudent = (req, res, next) => {
       zipcode: req.body.address.zipcode,
       city: req.body.address.city,
     }
-  }).then((studentCreated) => {
-    return res.status(201).send(studentCreated)
+  }).then((result) => {
+    return res.status(201).send(result)
   }).catch((error) => {
     next(error)
   })
 }
 
-replaceStudent = (req, res, next) => {
-
+updateStudent = (req, res, next) => {
   const updatedStudent = {
     email: req.body.email,
     name: req.body.name,
@@ -56,17 +55,14 @@ replaceStudent = (req, res, next) => {
   }
   req.models.Student.updateOne(
     {_id:req.params.id},
-     updatedStudent,
+     updatedStudent, 
      { 
-       upsert: true, 
+      upsert: true, 
       new: true, 
       runValidators: true,
       useFindAndModify: true,
-    }
-     )
+    })
     .then((status) => {
-      console.log(status.upserted)
-      console.log(status);
       if(status.upserted) {
         res.status(201)
       } else if(status.nModified) {
@@ -100,6 +96,6 @@ module.exports = {
   getStudents,
   createStudent,
   getStudentById,
-  replaceStudent,
+  updateStudent,
   deleteStudent
 }

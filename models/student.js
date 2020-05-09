@@ -7,20 +7,30 @@ const isEmail = ((v) => {
 const studentSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true,'missing required property: email'],
     unique: true,
     validate: {
-      validator: isEmail
+      validator: isEmail,
+      message: 'Not a valid email'
     }
   },
   name: {
     type: String,
-    required: true,
+    required: [true,'missing required property: name'],
   },
   address: {
-    street: String,
-    zipcode: Number,
-    city: String
+    street: {
+      type: String,
+      required: [true,'missing required property: street'],
+    },
+    zipcode: {
+      type: Number,
+      required: [true,'missing required property: zipcode'],
+    },
+    city: {
+      type: String,
+      required: [true,'missing required property: city'],
+    },
   }
 });
 

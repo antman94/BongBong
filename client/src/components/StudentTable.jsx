@@ -8,21 +8,35 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: 200,
+      display: 'flex',
     },
   },
   table: {
     minWidth: 400,
   },
-  bold: {
+  header: {
     fontWeight: 'bold',
     fontSize: 20,
   },
+  formGroup: {
+    border: '2px dotted black',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'coral'
+  },
+  submitBtnContainer: {
+    marginLeft: 10,
+  },
+  inputField: {
+    backgroundColor: 'white',
+  }
  
 }));
 
@@ -45,8 +59,9 @@ function deleteStudent(_id) {
 }
 
 /**
- * @desc Renders a table containing data fetched from a backend
- * @author Ante 
+ * @desc Renders a table containing data fetched from a backend, with a form where user can
+ * add new students to the table.
+ * @author Ante Hellgren
  */
 function StudentTable() {
 
@@ -61,9 +76,9 @@ function StudentTable() {
       city: ''
     }
   });
-
   const classes = useStyles();
 
+  // Inital get request
   useEffect(() => {
     fetch('http://localhost:4000/students')
       .then(response => response.json())
@@ -80,25 +95,25 @@ function StudentTable() {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell><h3 className={classes.bold}>Name</h3></TableCell>
-              <TableCell align="right"><h3 className={classes.bold}>Email</h3></TableCell>
-              <TableCell align="right"><h3 className={classes.bold}>City</h3></TableCell>
-              <TableCell align="right"><h3 className={classes.bold}>Street</h3></TableCell>
-              <TableCell align="right"><h3 className={classes.bold}>Zip</h3></TableCell>
+              <TableCell><h3 className={classes.header}>Name</h3></TableCell>
+              <TableCell align="right"><h3 className={classes.header}>Email</h3></TableCell>
+              <TableCell align="right"><h3 className={classes.header}>City</h3></TableCell>
+              <TableCell align="right"><h3 className={classes.header}>Street</h3></TableCell>
+              <TableCell align="right"><h3 className={classes.header}>Zip</h3></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            
             {rows.map((row, index) => (
               <TableRow key={index} id={index}>
                 <TableCell>
                   <button style={{border:'none'}} onClick={(e) => {
-                    document.getElementsByTagName('TBODY')[0].removeChild(document.getElementById(index));
-                    // Removes row from table based on map index
-                    console.log(rows[index]._id)
                     deleteStudent(rows[index]._id)
-                      .then((response) => console.log(response))
-
+                      .then((response) => {
+                        if(response.status === 200)
+                          // Removes row from table based on map index
+                          document.getElementsByTagName('TBODY')[0]
+                            .removeChild(document.getElementById(index));
+                      })
                   }}>
                     <span className="material-icons MuiIcon-root">clear</span>
                   </button>
@@ -115,74 +130,79 @@ function StudentTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <form className={classes.root} noValidate autoComplete="off">
-        <div>
-          <TextField 
-            id="input-name" 
-            label="Name" 
-            name="name"
-            variant="outlined" 
-            onChange={(e) => setInputValue({
-              ...inputValue,
-              [e.target.name]: e.target.value
-            })}/>
-          <TextField 
-            id="input-email" 
-            label="Email" 
-            name="email"
-            variant="outlined" 
-            onChange={(e) => setInputValue({
-              ...inputValue,
-              [e.target.name]: e.target.value
-            })}/>
-        </div>
-        <div>
-          <TextField 
-            id="input-street" 
-            label="Street" 
-            name="street"
-            variant="outlined" 
-            onChange={(e) => setInputValue({
-              ...inputValue,
-              address: {
-                ...inputValue.address,
+      <div className={classes.formGroup}>
+        <form className={classes.root} noValidate autoComplete="off">
+            <TextField 
+              className={classes.inputField}
+              id="input-name" 
+              label="Name" 
+              name="name"
+              variant="outlined" 
+              onChange={(e) => setInputValue({
+                ...inputValue,
                 [e.target.name]: e.target.value
-              }
-            })}/>
-          <TextField 
-            id="input-city" 
-            label="City" 
-            name="city"
-            variant="outlined" 
-            onChange={(e) => setInputValue({
-              ...inputValue,
-              address: {
-                ...inputValue.address,
+              })}/>
+            <TextField 
+              className={classes.inputField}
+              id="input-email" 
+              label="Email" 
+              name="email"
+              variant="outlined" 
+              onChange={(e) => setInputValue({
+                ...inputValue,
                 [e.target.name]: e.target.value
-              }
-            })}/>
-          <TextField 
-            id="input-zip" 
-            label="Zipcode" 
-            name="zipcode"
-            variant="outlined" 
-            onChange={(e) => setInputValue({
-              ...inputValue,
-              address: {
-                ...inputValue.address,
-                [e.target.name]: e.target.value
-              }
-            })}/>
-        </div>
-        <button onClick={(e) => {
-          createStudent('http://localhost:4000/students', inputValue)
-            .then(response => {
-              if(response.status == 201) 
-                setRows([...rows, inputValue])
-            })
-          e.preventDefault();
-        }}>Create</button>
-      </form>
+              })}/>
+            <TextField 
+              className={classes.inputField}
+              id="input-street" 
+              label="Street" 
+              name="street"
+              variant="outlined" 
+              onChange={(e) => setInputValue({
+                ...inputValue,
+                address: {
+                  ...inputValue.address,
+                  [e.target.name]: e.target.value
+                }
+              })}/>
+            <TextField 
+              className={classes.inputField}
+              id="input-city" 
+              label="City" 
+              name="city"
+              variant="outlined" 
+              onChange={(e) => setInputValue({
+                ...inputValue,
+                address: {
+                  ...inputValue.address,
+                  [e.target.name]: e.target.value
+                }
+              })}/>
+            <TextField 
+              className={classes.inputField}
+              id="input-zip" 
+              label="Zipcode" 
+              name="zipcode"
+              variant="outlined" 
+              onChange={(e) => setInputValue({
+                ...inputValue,
+                address: {
+                  ...inputValue.address,
+                  [e.target.name]: e.target.value
+                }
+              })}/>
+          <div className={classes.submitBtnContainer}>
+            <Button size="large" variant="contained" color="primary" onClick={(e) => {
+              createStudent('http://localhost:4000/students', inputValue)
+                .then(response => {
+                  if(response.status === 201) 
+                    setRows([...rows, inputValue])
+                })
+              e.preventDefault();
+            }}>Create</Button>
+          </div>
+        </form>
+      </div>
     </React.Fragment>
   );
 }

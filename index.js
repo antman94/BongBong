@@ -3,12 +3,14 @@ const cors = require('cors');
 const app = express();
 const db = require('./models');
 const routes = require('./routes');
+const morgan = require('morgan')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(morgan('combined'))
 
-//Middleware för att haka på mongo models till varje request
+//Middleware for accessing mongo models on every request
 app.use((req, res, next) => {
   req.models = db.models
   next()

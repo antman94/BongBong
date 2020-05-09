@@ -1,5 +1,7 @@
 # BongBong API server
 
+Application for starting up a server connected to mongoDB, which responds to student related API calls.
+
 ---
 ### To start server
 ```sh

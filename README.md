@@ -1,4 +1,4 @@
-# BongBong Server
+# BongBong API server
 
 ---
 ### To start server
@@ -23,7 +23,7 @@ https://docs.mongodb.com/manual/administration/install-community/
 ### Create new student
 ```sh
 curl -i -s -X POST "localhost:4000/students" -H "Content-Type:application/json" -d '{
-  "email":"testant.com","name":"ante","address":{"street":"PostStreet","zipcode":"123","city":"ort2"}}'
+  "email":"testant2@hej.com","name":"ante","address":{"street":"PostStreet1","zipcode":"123","city":"ort2"}}'
 ```
 
 ### Edit existing student by object ID
